@@ -1,4 +1,26 @@
 {
   "name": "md-links",
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "description": "",
+  "type": "module",
+  "dependencies": {
+    "chalk": "^5.0.0",
+    "node-fetch": "^3.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.8.0"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "eslint": "eslint --ext .js src/ "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ElannyTorres/LIM016-md-links.git"
+  },
+  "author": "Elanny Torres <torres.elanny@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ElannyTorres/LIM016-md-links/issues"
+  }
 }
