@@ -4,7 +4,9 @@
   "description": "",
   "type": "module",
   "dependencies": {
+    "@types/figlet": "^1.5.4",
     "chalk": "^5.0.0",
+    "figlet": "^1.5.2",
     "node-fetch": "^3.2.0"
   },
   "devDependencies": {
@@ -20,6 +22,9 @@
   },
   "author": "Elanny Torres <torres.elanny@gmail.com>",
   "license": "MIT",
+  "bin": {
+    "md-links": "src/cli.js"
+  },
   "bugs": {
     "url": "https://github.com/ElannyTorres/LIM016-md-links/issues"
   }

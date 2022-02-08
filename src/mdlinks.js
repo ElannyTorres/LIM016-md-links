@@ -1,4 +1,4 @@
-import { openDir, getLinks, getStatusLinks } from "./api.js";
+import { getStatusLinks } from "./api.js";
 
 /* openDir("/home/laboratoria/Luz/LIM016-md-links/testFolder");
 
