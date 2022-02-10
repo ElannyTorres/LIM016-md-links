@@ -3,7 +3,7 @@
 
 import { argv } from "process";
 import { banner, noOptions, noValidOptions, help } from "./messages.js";
-import { optionValFalse } from "./index.js";
+import { optionValFalse, optionValTrue } from "./index.js";
 
 const path = argv[2];
 // *There's no route nor options
@@ -23,6 +23,8 @@ if (argv.length === 3) {
   optionValFalse(path);
 } else if (argv.length === 4 && argv[3] === "--validate") {
   // *validate: true
+  console.log(argv);
+  optionValTrue(path);
 } else if (argv.length === 4 && argv[3] === "--stats") {
   // *stats
 } else {
