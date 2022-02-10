@@ -18,16 +18,24 @@ export const optionValTrue = (path) => {
 export const optionStats = (path) => {
   mdlinks(path, { validate: true })
     .then((res) => {
-      console.log(res);
       //? Total - Unique
+      const total = res.map((res) => res.href);
+      const unique = new Set(total);
+      console.log(`Total: ${total.length}\nUnique: ${unique.size}`);
     })
     .catch((err) => console.error(err));
 };
 export const optionValAndStats = (path) => {
   mdlinks(path, { validate: true })
     .then((res) => {
-      console.log(res);
       //? Total - Unique - Broken
+      const total = res.map((res) => res.href);
+      const unique = new Set(total);
+      const brokenArray = res.map((res) => res.message);
+      const broken = brokenArray.filter((link) => link === "FAIL");
+      console.log(
+        `Total: ${total.length}\nUnique: ${unique.size}\nBroken: ${broken.length}`
+      );
     })
     .catch((err) => console.error(err));
 };

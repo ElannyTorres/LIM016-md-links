@@ -22,19 +22,16 @@ export const mdlinks = (path, options = { validate: false }) => {
       reject(console.log("The enteredPath is not a file nor a directory, please enter a directory or a file."))
     } */
     if (pathExist(path)) {
-      console.log(pathExist(path));
       const absolutePath = pathAbsolute(path);
       let fileArray = [];
       // *First file
       if (isFile(path)) {
-        console.log("The enteredPath is a file");
         fileArray.push(absolutePath);
         console.log(fileArray);
         if (mdFiles(fileArray)) {
-          console.log("It is a md file");
           getLinks(fileArray)
             .then((res) => {
-              console.log(res.flat());
+              res.flat();
             })
             .catch((err) => console.log(err));
         } else {
@@ -45,10 +42,8 @@ export const mdlinks = (path, options = { validate: false }) => {
           );
         }
       } else if (isDirectory(path)) {
-        console.log("The path is a directory");
         fileArray.push(openDir(absolutePath));
         const flatFileArray = fileArray.flat();
-        console.log(flatFileArray);
         if (flatFileArray.length > 0) {
           getLinks(flatFileArray)
             .then((res) => {
@@ -58,17 +53,15 @@ export const mdlinks = (path, options = { validate: false }) => {
                 );
               } else {
                 if (options.validate) {
-                  console.log("Pedir status");
                   getStatusLinks(res.flat())
                     .then((res) => {
-                      console.log(res.flat());
+                      resolve(res.flat());
                     })
                     .catch((err) => {
                       console.log(err);
                     });
                 } else {
-                  console.log("Validate:false");
-                  resolve(console.log(res.flat()));
+                  resolve(res.flat());
                 }
               }
             })
