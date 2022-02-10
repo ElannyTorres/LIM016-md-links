@@ -1,51 +1,75 @@
-import { getStatusLinks } from "./api.js";
+import {
+  pathAbsolute,
+  pathExist,
+  isFile,
+  mdFiles,
+  getLinks,
+  getStatusLinks,
+  isDirectory,
+  openDir,
+} from "./api.js";
 
-/* openDir("/home/laboratoria/Luz/LIM016-md-links/testFolder");
-
-getLinks("/home/laboratoria/Luz/LIM016-md-links/testFolder/fileToRead1.md")
-  .then((res) => {
-    console.log(res);
-  })
-  .catch((err) => {
-    console.log(err);
+export const mdlinks = (path, options = { validate: false }) => {
+  // parámetro por defecto
+  return new Promise((resolve, reject) => {
+    if (!pathExist(path)) {
+      reject(console.log("The enteredPath does not exist"));
+    }
+    /* if(!isFile(path) || !isDirectory(path)) {
+      reject(console.log("The enteredPath is not a file nor a directory, please enter a directory or a file."))
+    } */
+    if (pathExist(path)) {
+      console.log(pathExist(path));
+      const absolutePath = pathAbsolute(path);
+      let fileArray = [];
+      // *First file
+      if (isFile(path)) {
+        console.log("The enteredPath is a file");
+        fileArray.push(absolutePath);
+        console.log(fileArray);
+        if (mdFiles(fileArray)) {
+          console.log("It is a md file");
+          getLinks(fileArray)
+            .then((res) => {
+              console.log(res.flat());
+            })
+            .catch((err) => console.log(err));
+        } else {
+          reject(console.log("The enteredPath is not a md file."));
+        }
+      } else if (isDirectory(path)) {
+        console.log("The path is a directory");
+        fileArray.push(openDir(absolutePath));
+        const flatFileArray = fileArray.flat();
+        console.log(flatFileArray);
+        if (flatFileArray.length > 0) {
+          getLinks(flatFileArray)
+            .then((res) => {
+              if (res.length === 0) {
+                console.log("There is no links in the path.");
+              } else {
+                if (options.validate) {
+                  console.log("Pedir status");
+                  getStatusLinks(res.flat())
+                    .then((res) => {
+                      console.log(res.flat());
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                } else {
+                  console.log("Validate:false");
+                  resolve(console.log(res.flat()));
+                }
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          console.log("There is no md files.");
+        }
+      }
+    }
   });
-getLinks(
-  "/home/laboratoria/Luz/LIM016-md-links/testFolder/Folder/fileToRead2.md"
-)
-  .then((res) => {
-    console.log(res);
-  })
-  .catch((err) => {
-    console.log(err);
-  }); */
-
-const arrayTest = [
-  {
-    href: "https://psicologiaymente.com/",
-    text: "enlaceCorrecto",
-    file: "/home/laboratoria/Luz/LIM016-md-links/testFolder/Folder/fileToRead2.md",
-  },
-  {
-    href: "https://www.lego.com/en-us/notfound",
-    text: "enlace no encontrado",
-    file: "/home/laboratoria/Luz/LIM",
-  },
-  {
-    href: "https://psicologiaymente.co/",
-    text: "enlaceIncorrecto",
-    file: "/home/laboratoria/Luz/LIM016-md-links/testFolder/Folder/fileToRead2.md",
-  },
-  {
-    href: "https://developer.mozilla.org/es/docs/Web/HTTP/Status",
-    text: "Estados de respuesta HTTP",
-    file: "/home/laboratoria/Luz/LIM016-md-links/testFolder/Folder/fileToRead2.md",
-  },
-];
-
-getStatusLinks(arrayTest)
-  .then((res) => {
-    console.log(res);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+};
