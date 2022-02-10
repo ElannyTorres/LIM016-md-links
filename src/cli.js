@@ -48,7 +48,11 @@ if (argv.length === 3) {
   // *validate and stats
   console.log(banner);
   optionValAndStats(path);
-} else {
+} else if (
+  argv.length > 2 &&
+  argv[3] !== "--stats" &&
+  argv[3] !== "--validate"
+) {
   // *other
   console.log(banner);
   console.log(noValidOptions);
