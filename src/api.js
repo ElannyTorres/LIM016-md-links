@@ -129,5 +129,4 @@ export const getStatusLinks = (linksArray) => {
   return Promise.all(newArray);
 };
 
-// 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
 // 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

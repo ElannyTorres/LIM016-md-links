@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import {
   pathAbsolute,
   pathExist,
@@ -13,7 +14,9 @@ export const mdlinks = (path, options = { validate: false }) => {
   // parámetro por defecto
   return new Promise((resolve, reject) => {
     if (!pathExist(path)) {
-      reject(console.log("The enteredPath does not exist"));
+      reject(
+        console.log(chalk.redBright.inverse("The enteredPath does not exist"))
+      );
     }
     /* if(!isFile(path) || !isDirectory(path)) {
       reject(console.log("The enteredPath is not a file nor a directory, please enter a directory or a file."))
@@ -35,7 +38,11 @@ export const mdlinks = (path, options = { validate: false }) => {
             })
             .catch((err) => console.log(err));
         } else {
-          reject(console.log("The enteredPath is not a md file."));
+          reject(
+            console.log(
+              chalk.redBright.inverse("The enteredPath is not a md file.")
+            )
+          );
         }
       } else if (isDirectory(path)) {
         console.log("The path is a directory");
@@ -46,7 +53,9 @@ export const mdlinks = (path, options = { validate: false }) => {
           getLinks(flatFileArray)
             .then((res) => {
               if (res.length === 0) {
-                console.log("There is no links in the path.");
+                console.log(
+                  chalk.redBright.inverse("There is no links in the path.")
+                );
               } else {
                 if (options.validate) {
                   console.log("Pedir status");
@@ -67,7 +76,7 @@ export const mdlinks = (path, options = { validate: false }) => {
               console.log(err);
             });
         } else {
-          console.log("There is no md files.");
+          console.log(chalk.redBright.inverse("There is no md files."));
         }
       }
     }

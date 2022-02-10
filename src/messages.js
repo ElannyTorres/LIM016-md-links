@@ -16,6 +16,9 @@ export const banner = chalk.blue.bold(
 export const noOptions = chalk.inverse.redBright(
   "⚠️ More information is needed.\nIf you want to see the list of available options, use 'md-links --help'."
 );
+export const noValidOptions = chalk.inverse.redBright(
+  "⚠️ There is no a valid option.\nIf you want to see the list of available options, use 'md-links --help'."
+);
 export const help = chalk.yellow(`
 =================================================================================================================
 Usage: md-links <path-to-file> [options]\n

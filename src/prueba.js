@@ -1,4 +1,4 @@
 import { mdlinks } from "./mdlinks.js";
 
-const path = "testFolder";
+const path = "testolder";
 mdlinks(path, { validate: false });
