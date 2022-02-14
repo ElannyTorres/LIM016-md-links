@@ -6,6 +6,7 @@ import {
   openDir,
   mdFiles,
   getLinks,
+  getStatusLinks,
 } from "../src/api.js";
 
 const arrayToTestMDFile = [
@@ -20,63 +21,64 @@ const arrayMDFiles = [
   "./testFolder/emptyFile.md",
   "./testFolder/fileToRead1.md",
 ];
+const arrayToTest = [
+  "./testFolder/Folder/fileToRead2.md",
+  "./testFolder/emptyFile.md",
+];
 const arrayTest = [
   {
     href: "https://psicologiaymente.com/",
     text: "enlaceCorrecto",
-    file: "/home/laboratoria/Luz/LIM016-md-links/testFolder/Folder/fileToRead2.md",
+    file: "./testFolder/Folder/fileToRead2.md",
   },
   {
     href: "https://www.lego.com/en-us/notfound",
-    text: "enlace no encontrado",
-    file: "/home/laboratoria/Luz/LIM",
-  },
-  {
-    href: "https://psicologiaymente.co/",
-    text: "enlaceIncorrecto",
-    file: "/home/laboratoria/Luz/LIM016-md-links/testFolder/Folder/fileToRead2.md",
+    text: "Lego not Found",
+    file: "./testFolder/Folder/fileToRead2.md",
   },
   {
     href: "https://developer.mozilla.org/es/docs/Web/HTTP/Status",
     text: "Estados de respuesta HTTP",
-    file: "/home/laboratoria/Luz/LIM016-md-links/testFolder/Folder/fileToRead2.md",
+    file: "./testFolder/Folder/fileToRead2.md",
+  },
+  {
+    href: "https://www.kualo.co.uk/404",
+    text: "Kualo 404",
+    file: "./testFolder/Folder/fileToRead2.md",
   },
 ];
 const arrayStatus = [
   {
     href: "https://psicologiaymente.com/",
     text: "enlaceCorrecto",
-    file: "/home/laboratoria/Luz/LIM016-md-links/testFolder/Folder/fileToRead2.md",
+    file: "./testFolder/Folder/fileToRead2.md",
     status: 200,
     message: "OK",
   },
   {
     href: "https://www.lego.com/en-us/notfound",
-    text: "enlace no encontrado",
-    file: "/home/laboratoria/Luz/LIM",
+    text: "Lego not Found",
+    file: "./testFolder/Folder/fileToRead2.md",
     status: 404,
     message: "FAIL",
   },
   {
-    href: "https://psicologiaymente.co/",
-    text: "enlaceIncorrecto",
-    file: "/home/laboratoria/Luz/LIM016-md-links/testFolder/Folder/fileToRead2.md",
+    href: "https://developer.mozilla.org/es/docs/Web/HTTP/Status",
+    text: "Estados de respuesta HTTP",
+    file: "./testFolder/Folder/fileToRead2.md",
     status: 200,
     message: "OK",
   },
   {
-    href: "https://developer.mozilla.org/es/docs/Web/HTTP/Status",
-    text: "Estados de respuesta HTTP",
-    file: "/home/laboratoria/Luz/LIM016-md-links/testFolder/Folder/fileToRead2.md",
-    status: 200,
-    message: "OK",
+    href: "https://www.kualo.co.uk/404",
+    text: "Kualo 404",
+    file: "./testFolder/Folder/fileToRead2.md",
+    status: 404,
+    message: "FAIL",
   },
 ];
 
 describe("pathExist", () => {
-  it("pathExist should be a function", () => {
-    expect(typeof pathExist).toBe("function");
-  });
   it("pathExist should return true if the path exists", () => {
     expect(pathExist("./testFolder")).toBe(true);
   });
@@ -86,9 +88,6 @@ describe("pathExist", () => {
 });
 
 describe("pathAbsolute", () => {
-  it("pathAbsolute should be a function", () => {
-    expect(typeof pathAbsolute).toBe("function");
-  });
   it("pathAbsolute should return the absolute path of a relative path", () => {
     expect(pathAbsolute("./testFolder")).toEqual(
       "/home/laboratoria/Luz/LIM016-md-links/testFolder"
@@ -102,9 +101,6 @@ describe("pathAbsolute", () => {
 });
 
 describe("isDirectory", () => {
-  it("isDirectory should be a function", () => {
-    expect(typeof isDirectory).toBe("function");
-  });
   it("isDirectory should return true if the path is a directory.", () => {
     expect(isDirectory("./testFolder")).toEqual(true);
   });
@@ -114,9 +110,6 @@ describe("isDirectory", () => {
 });
 
 describe("isFile", () => {
-  it("isFile should be a function", () => {
-    expect(typeof isFile).toBe("function");
-  });
   it("isFile should return true if the path is a File.", () => {
     expect(isFile("./testFolder/fileToRead1.md")).toEqual(true);
   });
@@ -126,29 +119,30 @@ describe("isFile", () => {
 });
 
 describe("openDir", () => {
-  it("openDir should be a function", () => {
-    expect(typeof openDir).toBe("function");
-  });
   it("openDir should return an array of mdFiles", () => {
     expect(openDir("./testFolder")).toStrictEqual(arrayMDFiles);
   });
 });
 
 describe("mdFiles", () => {
-  it("mdFiles should be a function", () => {
-    expect(typeof mdFiles).toBe("function");
-  });
   it("mdFiles should return an array of md files", () => {
     expect(mdFiles(arrayToTestMDFile)).toStrictEqual(arrayMDFiles);
   });
 });
 
 describe("getLinks", () => {
-  it("getLinks shoulb be a function", () => {
-    expect(typeof getLinks).toBe("function");
-  });
   it("getLinks shoulb return an array of links for each file", () => {
-    console.log(getLinks(arrayMDFiles));
-    expect(getLinks(arrayMDFiles).then((res) => res)).toStrictEqual(arrayTest);
+    return getLinks(arrayToTest).then((res) =>
+      expect(res.flat()).toStrictEqual(arrayTest)
+    );
   });
 });
+
+describe("getStatusLinks", () => {
+  it("getStatusLinks should return an array of links for each file.", () => {
+    return getStatusLinks(arrayTest).then((res) =>
+      expect(res).toStrictEqual(arrayStatus)
+    );
+  });
+});
+// Test de integración con mdlinks

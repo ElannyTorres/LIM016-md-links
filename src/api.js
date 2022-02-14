@@ -75,12 +75,9 @@ export const getLinks = (array) => {
         }
         let link = data.match(urlText);
         if (link) {
-          // console.log(link);
           link.forEach((url) => {
             const linkmd = url.match(urlRegex).join().slice(0, -1);
             const textmd = url.match(justText).join().slice(1, -1);
-            // console.log(textmd);
-            // console.log(linkmd);
             const info = {
               href: linkmd,
               text: textmd,
@@ -128,5 +125,3 @@ export const getStatusLinks = (linksArray) => {
   });
   return Promise.all(newArray);
 };
-
-// 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

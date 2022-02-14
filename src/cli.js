@@ -22,7 +22,7 @@ if (argv.length === 3 && argv[2] == "--help") {
   console.log(help);
 }
 // *validate: false
-if (argv.length === 3) {
+if (argv.length === 3 && argv[3] !== "--help") {
   console.log(banner);
   optionValFalse(path);
 } else if (argv.length === 4 && argv[3] === "--validate") {

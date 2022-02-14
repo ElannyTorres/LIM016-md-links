@@ -13,27 +13,41 @@ import {
 export const mdlinks = (path, options = { validate: false }) => {
   // parámetro por defecto
   return new Promise((resolve, reject) => {
-    if (!pathExist(path)) {
+    if (!pathExist(path) && path !== "--help") {
       reject(
         console.log(chalk.redBright.inverse("The enteredPath does not exist"))
       );
     }
-    /* if(!isFile(path) || !isDirectory(path)) {
-      reject(console.log("The enteredPath is not a file nor a directory, please enter a directory or a file."))
-    } */
     if (pathExist(path)) {
       const absolutePath = pathAbsolute(path);
       let fileArray = [];
       // *First file
       if (isFile(path)) {
         fileArray.push(absolutePath);
-        console.log(fileArray);
-        if (mdFiles(fileArray)) {
+        if (mdFiles(fileArray).length > 0) {
           getLinks(fileArray)
             .then((res) => {
-              res.flat();
+              if (res.length === 0) {
+                console.log(
+                  chalk.redBright.inverse("There is no links in the path.")
+                );
+              } else {
+                if (options.validate) {
+                  getStatusLinks(res.flat())
+                    .then((res) => {
+                      resolve(res.flat());
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                } else {
+                  resolve(res.flat());
+                }
+              }
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+              console.log(err);
+            });
         } else {
           reject(
             console.log(
