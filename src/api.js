@@ -40,7 +40,6 @@ export const openDir = (enteredPath) => {
   let mdArray = [];
   items.forEach((item) => {
     let itemPath = enteredPath + "/" + item;
-    // console.log(itemPath);
     if (!isFile(itemPath)) {
       mdArray.push(openDir(itemPath));
     } else {
@@ -50,7 +49,6 @@ export const openDir = (enteredPath) => {
     }
   });
   return mdArray.flat(Infinity);
-  // console.log(mdArray); // array con archivos md
 };
 
 // 5.2 MDFile Array
@@ -71,7 +69,6 @@ export const getLinks = (array) => {
       const linkArray = [];
       readFile(file, "utf-8", (error, data) => {
         if (error) {
-          console.log(error);
           return reject(error.message);
         }
         let link = data.match(urlText);

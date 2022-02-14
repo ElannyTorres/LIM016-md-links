@@ -1,7 +1,7 @@
 {
   "name": "elanny-md-links",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "It is library which help to obtain the links inside a file or a directory.",
   "type": "module",
   "dependencies": {
     "@types/figlet": "^1.5.4",
@@ -34,5 +34,14 @@
   },
   "bugs": {
     "url": "https://github.com/ElannyTorres/LIM016-md-links/issues"
-  }
+  },
+  "keywords": [
+    "node",
+    "md",
+    "chalk",
+    "node-fetch",
+    "jest",
+    "figlet",
+    "eslint"
+  ]
 }

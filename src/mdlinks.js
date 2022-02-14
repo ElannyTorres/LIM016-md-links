@@ -25,7 +25,8 @@ export const mdlinks = (path, options = { validate: false }) => {
       if (isFile(path)) {
         fileArray.push(absolutePath);
         if (mdFiles(fileArray).length > 0) {
-          getLinks(fileArray)
+          const newMDFile = mdFiles(fileArray);
+          getLinks(newMDFile)
             .then((res) => {
               if (res.length === 0) {
                 console.log(
