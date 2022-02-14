@@ -63,7 +63,7 @@ export const mdFiles = (array) =>
 // 7.1 false = href, text, file
 export const getLinks = (array) => {
   const newArray = array.map((file) => {
-    const promiseObtain = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       // eslint-disable-next-line no-useless-escape
       const urlText = /\[([^\[]+)\](\(.*\))/gm; // texto con el link
       const urlRegex = /(https?:\/\/[^\s]+)/g; // buscar el link
@@ -71,7 +71,8 @@ export const getLinks = (array) => {
       const linkArray = [];
       readFile(file, "utf-8", (error, data) => {
         if (error) {
-          return reject(error);
+          console.log(error);
+          return reject(error.message);
         }
         let link = data.match(urlText);
         if (link) {
@@ -89,7 +90,6 @@ export const getLinks = (array) => {
         resolve(linkArray);
       });
     });
-    return promiseObtain;
   });
   return Promise.all(newArray);
 };

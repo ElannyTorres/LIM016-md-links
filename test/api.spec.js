@@ -77,7 +77,23 @@ const arrayStatus = [
     message: "FAIL",
   },
 ];
-
+const arrayToTestFail = ["../testFolder/emptyFile.md"];
+const array = [
+  {
+    href: "https:",
+    text: "Invalid link",
+    file: "./Folder",
+  },
+];
+const arrayError = [
+  {
+    href: "https:",
+    text: "Invalid link",
+    file: "./Folder",
+    status: "Failed request",
+    message: "FAIL",
+  },
+];
 describe("pathExist", () => {
   it("pathExist should return true if the path exists", () => {
     expect(pathExist("./testFolder")).toBe(true);
@@ -136,12 +152,23 @@ describe("getLinks", () => {
       expect(res.flat()).toStrictEqual(arrayTest)
     );
   });
+  it("getLinks shoulb return an array of links for each file", () => {
+    return expect(getLinks(arrayToTestFail)).rejects.toMatch(
+      "ENOENT: no such file or directory, open '../testFolder/emptyFile.md"
+    );
+  });
 });
 
 describe("getStatusLinks", () => {
-  it("getStatusLinks should return an array of links for each file.", () => {
+  it("getStatusLinks should return an array of links status for each file.", () => {
     return getStatusLinks(arrayTest).then((res) =>
       expect(res).toStrictEqual(arrayStatus)
+    );
+  });
+  it("getStatusLinks should return an array of links status for each file.", () => {
+    expect.assertions(0);
+    return getStatusLinks(array).catch((res) =>
+      expect(res).toStrictEqual(arrayError)
     );
   });
 });
